@@ -1,7 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
 
 
-// Создаем модель для формы регистрации
 export class SignUpFormModel {
   name = '';
   email = '';
@@ -45,7 +44,6 @@ export class SignUpFormModel {
   }
 }
 
-// Создаем модель для формы входа
 export class LoginFormModel {
   email = '';
   password = '';

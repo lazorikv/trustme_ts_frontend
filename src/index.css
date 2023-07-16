@@ -81,8 +81,8 @@ select {
 
 p {
   text-align: center;
-  font-size: 14px; /* Изменение размера шрифта */
-  margin-top: 20px; /* Добавление отступа сверху */
+  font-size: 14px;
+  margin-top: 20px;
 }
 
 a {

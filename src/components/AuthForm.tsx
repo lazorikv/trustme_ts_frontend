@@ -11,7 +11,7 @@ const SignUpPage: React.FC = observer(() => {
     const { signUpStore } = useRootStore();
   const navigate = useNavigate();
 
-  // Обработчик отправки формы регистрации
+
   const handleSignUpSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const config = {
@@ -28,16 +28,14 @@ const SignUpPage: React.FC = observer(() => {
         phone: signUpStore.phone,
       }, config);
 
-      // Обработка успешной регистрации
+
       console.log('Регистрация прошла успешно!', response.data);
-      navigate('/users'); // Перенаправление на страницу после успешной регистрации
+      navigate('/users');
     } catch (error) {
-      // Обработка ошибки регистрации
+     
       console.error('Ошибка регистрации:', error.response?.data);
     }
   };
-
-  // Обработчик отправки формы входа
   
 
   return (
