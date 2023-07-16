@@ -30,7 +30,7 @@ const SignUpPage: React.FC = observer(() => {
 
       // Обработка успешной регистрации
       console.log('Регистрация прошла успешно!', response.data);
-      navigate('/auth'); // Перенаправление на страницу после успешной регистрации
+      navigate('/users'); // Перенаправление на страницу после успешной регистрации
     } catch (error) {
       // Обработка ошибки регистрации
       console.error('Ошибка регистрации:', error.response?.data);
@@ -41,7 +41,7 @@ const SignUpPage: React.FC = observer(() => {
   
 
   return (
-    <div>
+    <div className="container">
       <h2>Регистрация</h2>
       <form onSubmit={handleSignUpSubmit}>
         <div>
@@ -99,6 +99,9 @@ const SignUpPage: React.FC = observer(() => {
         <div>
           <button type="submit">Зарегистрироваться</button>
         </div>
+        <p>
+          Уже зарегистрированы? <a href="/login">Войдите здесь</a>
+        </p>
       </form>
     </div>
   );

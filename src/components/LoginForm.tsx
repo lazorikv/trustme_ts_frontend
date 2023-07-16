@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useRootStore } from '../stores/RootStore';
+import '../index.css';
 import { api } from '../App';
 
 const LoginPage: React.FC = observer(() => {
@@ -28,8 +29,8 @@ const LoginPage: React.FC = observer(() => {
     };
 
     return (
-        <div>
-          <h2>Вход</h2>
+      <div className="container">
+      <h2>Вход</h2>
       <form onSubmit={handleLoginSubmit}>
         <div>
           <label>
@@ -54,8 +55,8 @@ const LoginPage: React.FC = observer(() => {
         <div>
           <button type="submit">Войти</button>
         </div>
-      </form>  
-        </div>
+      </form>
+    </div>
     )
 
 })

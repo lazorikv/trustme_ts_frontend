@@ -8,15 +8,17 @@ import SignUpPage from './components/AuthForm';
 import LoginPage from './components/LoginForm';
 
 
+const apiUrl = process.env.TRUST_ME_API_URL = 'http://localhost:8000/api/v1'
+
 export const api = axios.create({
-  baseURL: 'http://localhost:8000/api/v1', // Базовый URL для всех запросов
+  baseURL: apiUrl
 });
 
 const App: React.FC = () => {
   const rootStore = new RootStore();
   return (
     <div>
-      <h1>ToDo App</h1>
+      <h1>TRUST ME</h1>
       <RootStoreContext.Provider value={rootStore}>
         <Router>
           <Routes>
