@@ -93,3 +93,10 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.error-message {
+  text-align: center;
+  margin-top: 10px;
+  color: #d8a1c4;
+  font-weight: bold;
+}

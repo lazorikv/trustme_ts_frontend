@@ -1,30 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useRootStore } from '../stores/RootStore';
 import '../index.css';
-import { api } from '../App';
 
 const LoginPage: React.FC = observer(() => {
 
     const { loginStore } = useRootStore();
+    const [errorValue, setErrorValue] = useState(false)
 
     const navigate = useNavigate();
     const handleLoginSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-
         try {
-        const response = await api.post('/login', {
-            email: loginStore.email,
-            password: loginStore.password,
-        });
-
-        const token = response.data.token;
-            localStorage.setItem('token', token);
-        navigate('/users'); // Перенаправление на страницу после успешного входа
-        } catch (error) {
-        // Обработка ошибки входа
-        console.error('Ошибка входа:', error.response?.data);
+          await loginStore.loginUser()
+          localStorage.setItem('token', loginStore.token);
+          navigate('/users');
+          }
+        catch (error) {
+            setErrorValue(true);
+            setTimeout(() => {
+              setErrorValue(false);
+            }, 2000);
         }
     };
 
@@ -56,6 +53,9 @@ const LoginPage: React.FC = observer(() => {
           <button type="submit">Войти</button>
         </div>
       </form>
+      {errorValue && (
+      <div className="error-message">Неправильно введенные данные</div>
+    )}
     </div>
     )
 

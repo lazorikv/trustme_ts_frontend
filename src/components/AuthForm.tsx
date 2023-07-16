@@ -1,39 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { useRootStore } from '../stores/RootStore';
-import { api } from '../App';
 
 
 
 const SignUpPage: React.FC = observer(() => {
 
-    const { signUpStore } = useRootStore();
+    const { signUpStore, loginStore } = useRootStore();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('')
 
 
   const handleSignUpSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-          },
-    }
     try {
-      const response = await api.post('/signup', {
-        name: signUpStore.name,
-        email: signUpStore.email,
-        password: signUpStore.password,
-        role: signUpStore.role,
-        phone: signUpStore.phone,
-      }, config);
-
-
-      console.log('Регистрация прошла успешно!', response.data);
-      navigate('/users');
+        await signUpStore.signUpUser()
+        localStorage.setItem('token', loginStore.token);
+        navigate('/users');
     } catch (error) {
-     
-      console.error('Ошибка регистрации:', error.response?.data);
+      if (error.response.status === 409) {
+          setErrorMessage(error.response.data.message)
+      }
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
     }
   };
   
@@ -101,6 +92,7 @@ const SignUpPage: React.FC = observer(() => {
           Уже зарегистрированы? <a href="/login">Войдите здесь</a>
         </p>
       </form>
+      <div className="error-message">{errorMessage}</div>
     </div>
   );
 });
