@@ -74,6 +74,7 @@ export class LoginFormModel {
       setEmail: action,
       setPassword: action,
       loginUser: action,
+      setToken: action,
     });
   }
 
@@ -92,5 +93,9 @@ export class LoginFormModel {
         password: this.password,
       })
       this.token = response.data.token;
+    }
+  
+    setToken(token:string) {
+      localStorage.setItem('token', token);
     }
 }

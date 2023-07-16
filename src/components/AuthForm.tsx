@@ -16,7 +16,7 @@ const SignUpPage: React.FC = observer(() => {
     event.preventDefault();
     try {
         await signUpStore.signUpUser()
-        localStorage.setItem('token', loginStore.token);
+        loginStore.setToken(loginStore.token)
         navigate('/users');
     } catch (error) {
       if (error.response.status === 409) {

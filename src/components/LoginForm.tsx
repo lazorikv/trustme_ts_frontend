@@ -14,7 +14,7 @@ const LoginPage: React.FC = observer(() => {
         event.preventDefault();
         try {
           await loginStore.loginUser()
-          localStorage.setItem('token', loginStore.token);
+          loginStore.setToken(loginStore.token)
           navigate('/users');
           }
         catch (error) {
