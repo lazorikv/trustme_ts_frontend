@@ -30,12 +30,12 @@ const SignUpPage: React.FC = observer(() => {
   
 
   return (
-    <div className="container">
-      <h2>Регистрация</h2>
+    <div className="auth_container">
+      <h2>Sign up</h2>
       <form onSubmit={handleSignUpSubmit}>
         <div>
           <label>
-            Имя:
+            Name:
             <input
               type="text"
               value={signUpStore.name}
@@ -55,7 +55,7 @@ const SignUpPage: React.FC = observer(() => {
         </div>
         <div>
           <label>
-            Пароль:
+            Password:
             <input
               type="password"
               value={signUpStore.password}
@@ -65,19 +65,19 @@ const SignUpPage: React.FC = observer(() => {
         </div>
         <div>
           <label>
-            Роль:
+            Role:
             <select
               value={signUpStore.role}
               onChange={(event) => signUpStore.setRole(event.target.value)}
             >
-              <option value="landlord">Арендодатель</option>
-              <option value="tenant">Арендатор</option>
+              <option value="landlord">Landlord</option>
+              <option value="tenant">Tenant</option>
             </select>
           </label>
         </div>
         <div>
           <label>
-            Телефон:
+            Phone:
             <input
               type="text"
               value={signUpStore.phone}
@@ -86,10 +86,10 @@ const SignUpPage: React.FC = observer(() => {
           </label>
         </div>
         <div>
-          <button type="submit">Зарегистрироваться</button>
+          <button type="submit">Sign up</button>
         </div>
         <p>
-          Уже зарегистрированы? <a href="/login">Войдите здесь</a>
+        Already registered? <a href="/login">Log in here</a>
         </p>
       </form>
       <div className="error-message">{errorMessage}</div>

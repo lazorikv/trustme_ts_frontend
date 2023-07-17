@@ -1,0 +1,61 @@
+.home_content {
+  background-image: url('../public/S39.jpeg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.background_image {
+  background-image: url('../public/S39.jpeg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.rectangle {
+  width: 60%;
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.section {
+  min-height: 60px;
+  flex: 1; /* равномерное распределение по ширине */
+  border: 1px solid rgb(82, 80, 80);
+  background-color: #c4ebe0;
+  text-align: center;
+}
+
+p {
+  opacity: 0.6;
+}
+
+.search_button {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 150px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  background-color: #9999b3;
+  cursor: pointer;
+  font-size: 17px;
+  border: 1px solid rgb(82, 80, 80);
+}

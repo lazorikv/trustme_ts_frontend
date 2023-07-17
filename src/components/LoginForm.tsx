@@ -15,7 +15,7 @@ const LoginPage: React.FC = observer(() => {
         try {
           await loginStore.loginUser()
           loginStore.setToken(loginStore.token)
-          navigate('/users');
+          navigate('/');
           }
         catch (error) {
             setErrorValue(true);
@@ -26,8 +26,8 @@ const LoginPage: React.FC = observer(() => {
     };
 
     return (
-      <div className="container">
-      <h2>Вход</h2>
+      <div className="auth_container">
+      <h2>Log in</h2>
       <form onSubmit={handleLoginSubmit}>
         <div>
           <label>
@@ -41,7 +41,7 @@ const LoginPage: React.FC = observer(() => {
         </div>
         <div>
           <label>
-            Пароль:
+            Password:
             <input
               type="password"
               value={loginStore.password}
@@ -50,11 +50,14 @@ const LoginPage: React.FC = observer(() => {
           </label>
         </div>
         <div>
-          <button type="submit">Войти</button>
+          <button type="submit">Login</button>
         </div>
       </form>
+      <p>
+      Not registered yet? <a href="/signup">Register here</a>
+        </p>
       {errorValue && (
-      <div className="error-message">Неправильно введенные данные</div>
+      <div className="error-message">Incorrect data</div>
     )}
     </div>
     )
