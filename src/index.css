@@ -16,6 +16,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 body > * {
@@ -97,7 +100,7 @@ p {
   margin-top: 20px;
 }
 
-a {
+a, span {
   color: #666666;
   text-decoration: none;
 }
@@ -111,4 +114,10 @@ a:hover {
   margin-top: 10px;
   color: #d8a1c4;
   font-weight: bold;
+}
+
+.title {
+  left:0;
+  margin-top: 70px;
+  font-size: 25px;
 }

@@ -1,22 +1,10 @@
-.home_content {
-  background-image: url('../public/S39.jpeg');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
 .background_image {
-  background-image: url('../public/S39.jpeg');
+  background-image: url('/public/homepage/S39.jpeg');
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: 70vh;
+  width: 100%;
   z-index: -1;
 }
 
@@ -41,7 +29,7 @@
   text-align: center;
 }
 
-p {
+.section p {
   opacity: 0.6;
 }
 
@@ -58,4 +46,12 @@ p {
   cursor: pointer;
   font-size: 17px;
   border: 1px solid rgb(82, 80, 80);
+}
+
+.text_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Высота контейнера с текстом */
+  background-color: rgba(255, 255, 255, 0.8); /* Цвет фона контейнера */
 }

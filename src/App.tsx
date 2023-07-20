@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import UserForm from './components/UserForm';
+import ApartmentCreateForm from './components/ApartmentCreateForm';
 import UserList from './components/UserList';
 import { RootStore, RootStoreContext } from './stores/RootStore';
 import SignUpPage from './components/AuthForm';
 import LoginPage from './components/LoginForm';
-import { Header, SubHeader } from './components/Header';
+import { Header, SubHeader} from './components/Header';
+import Footer from './components/Footer';
 import MainPage from './components/Main';
 
 
@@ -28,7 +29,9 @@ const AppContent: React.FC = () => {
         <Route path="/users" element={<UserList />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path='/apartments' element={<ApartmentCreateForm />} />
       </Routes>
+      {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </>
   );
 };

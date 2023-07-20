@@ -1,0 +1,35 @@
+.footer {
+  background-color: #f0f0f0;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+  margin-top: 50px;
+  bottom: 0;
+}
+
+  
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer__contact-info {
+    margin-bottom: 10px;
+  }
+  
+  .footer__contact-label {
+    font-weight: bold;
+  }
+  
+  .footer__links {
+    display: flex;
+  }
+  
+  .footer__link-button {
+    margin-right: 10px;
+  }
+  
+
+  
