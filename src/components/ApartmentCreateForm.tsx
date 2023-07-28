@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRootStore } from "../stores/RootStore";
 import { Address, ApartmentCreate } from "../stores/apartment";
 import styles from '../styles/apartment.module.css'
@@ -20,11 +20,9 @@ const ApartmentCreateForm: React.FC = () => {
     apart_number: '',
   });
   const [title, setTitle] = useState("");
-  const [landlordId, setLandlordId] = useState(1);
   const [photos, setPhotos] = useState<File[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(addressId)
     const apartment = new ApartmentCreate(
       floor,
       addressId,

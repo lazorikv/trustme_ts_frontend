@@ -1,13 +1,56 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/headerStyles.module.css";
 import { useRootStore } from "../stores/RootStore";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Dropdown from "./accountDropDown";
+import { accountDropDownPhoto } from "../constants";
 
 export const Header: React.FC = () => {
   const { loginStore } = useRootStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigator = useNavigate();
 
-  const LogOut = () => {
-    loginStore.setToken("");
+  const dropdownItems = [
+    {
+      text: 'Account',
+      action: () => {
+        navigator('/account');
+        setIsDropdownOpen(false);
+      },
+    },
+    {
+      text: 'My Apartment',
+      action: () => {
+        setIsDropdownOpen(false);
+        navigator('/myapartments');
+      },
+    },
+    {
+      text: 'Logout',
+      action: () => {
+        loginStore.setToken("");
+        setIsDropdownOpen(false);
+        navigator('/login');
+      },
+    }
+  ];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
   };
 
   return (
@@ -35,9 +78,12 @@ export const Header: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link to="/login" className={styles.link} onClick={LogOut}>
-              Logout
-            </Link>
+          <div className={styles.dropDown} ref={dropdownRef}>
+          {isDropdownOpen && <Dropdown items={dropdownItems} />}
+        <div onClick={toggleDropdown}>
+          <img className={styles.accountDropDown_photo} src={accountDropDownPhoto} alt="User" />
+        </div>
+        </div>
           </li>
         </ul>
       </nav>

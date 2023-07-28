@@ -1,0 +1,20 @@
+.DropDown {
+    position: absolute;
+    top: 100%;
+    right: 0; 
+    background-color: white;
+    z-index: 1;
+    border: 1px solid black; 
+    padding: 10px;
+    width: 150px;
+}
+
+.item {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    transition: border 0.3s ease;
+}
+
+.item:hover {
+    border: 1px solid black;
+}

@@ -63,6 +63,16 @@
   margin-left: 10px;
 }
 
+.accountDropDown_photo {
+  width: 40px;
+
+}
+
+.dropDown {
+  position: relative;
+  cursor: pointer;
+  margin-right: 50px;
+}
 
 
 @media screen and (max-width: 768px) {

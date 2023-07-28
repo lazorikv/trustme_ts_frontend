@@ -9,6 +9,10 @@ import LoginPage from './components/LoginForm';
 import { Header, SubHeader} from './components/Header';
 import Footer from './components/Footer';
 import MainPage from './components/Main';
+import MyApartments from './components/myApartments';
+import ApartmentDetails from './components/ApartmentPage';
+import AllApartments from './components/AllApartments';
+import PageTransitionWrapper from './components/PageTransition';
 
 
 const apiUrl = process.env.TRUST_ME_API_URL = 'http://localhost:8000/api/v1'
@@ -30,6 +34,9 @@ const AppContent: React.FC = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path='/apartments' element={<ApartmentCreateForm />} />
+        <Route path='/myapartments' element={<MyApartments />} />
+        <Route path="/myapartments/:id" element={<ApartmentDetails />} />
+        <Route path="/allapartments" element={<AllApartments />} />
       </Routes>
       {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </>
@@ -43,7 +50,9 @@ const App: React.FC = () => {
     <div>
       <RootStoreContext.Provider value={rootStore}>
         <Router>
+        <PageTransitionWrapper>
           <AppContent />
+          </PageTransitionWrapper>
         </Router>
       </RootStoreContext.Provider>
     </div>

@@ -98,20 +98,74 @@ export class Apartment {
 }
 
 export class ApartmentStore {
+  apartment: Apartment | null = null;
   apartments: Apartment[] = [];
+  landlordApartments: Apartment[] = [];
+  currentPage = 1;
+  itemsPerPage = 9;
+  totalCount = 0;
 
   constructor() {
     makeObservable(this, {
       apartments: observable,
+      apartment: observable,
+      totalCount: observable,
+      currentPage:observable,
+      itemsPerPage: observable,
+      landlordApartments: observable,
       fetchApartments: action,
+      setCurrentPage: action,
+      fetchApartment: action,
       addApartment: action,
     });
   }
+
 
   async fetchApartments(): Promise<void> {
     try {
       const response = await api.get("/apartment/rec");
       this.apartments = await response.data;
+    } catch (error) {
+      console.error("Error fetching apartments:", error);
+    }
+  }
+
+  async fetchAllApartments(page: number, limit: number): Promise<void> {
+    try {
+      const response = await api.get("/apartment", {
+        params: {
+          page,
+          limit,
+        },
+        
+      });
+      this.apartments = response.data[0];
+      this.totalCount = response.data[1].length
+      
+    }
+    catch(error) {
+      console.error("Error fetching apartments:", error);
+    }
+   }
+
+   setCurrentPage = (page: number) => {
+    this.currentPage = page;
+  };
+
+  async fetchApartment(id: string): Promise<void> {
+    try {
+      const response = await api.get(`/apartment/${id}`);
+      this.apartment = await response.data;
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  }
+
+
+  async fetchLandlordApartments(id: number): Promise<void> {
+    try {
+      const response = await api.get(`/apartment/${id}/landlord`);
+      this.landlordApartments = await response.data;
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
@@ -120,8 +174,6 @@ export class ApartmentStore {
   async addApartment(apartment: ApartmentCreate): Promise<void> {
     const { photos, ...rest } = apartment;
     const data = JSON.stringify(rest);
-    const token = localStorage.getItem('token');
-    console.log(token)
   
     try {
       const formData = new FormData();
@@ -142,5 +194,9 @@ export class ApartmentStore {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  get totalPages() {
+    return Math.ceil(this.totalCount/ this.itemsPerPage);
   }
 }

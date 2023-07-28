@@ -1,11 +1,11 @@
-import { useEffect } from "react";
 import styles from "../styles/apartment.module.css";
-import { useRootStore } from "../stores/RootStore";
 import { observer } from "mobx-react";
-import { Address } from "../stores/apartment";
+import { Address, Apartment } from "../stores/apartment";
 import { apartmentDefaultPhoto, locationIcon } from "../constants";
+import { useNavigate } from "react-router-dom";
 
-interface ApartmentCardProps {
+export interface ApartmentCardProps {
+  id: number,
   floor: number;
   area: number;
   room_count: number;
@@ -14,7 +14,12 @@ interface ApartmentCardProps {
   photos: string[];
 }
 
-const ApartmentCard: React.FC<ApartmentCardProps> = ({
+interface ApartmentGridProps {
+  apartments: Apartment[] | null;
+}
+
+export const ApartmentCard: React.FC<ApartmentCardProps> = ({
+    id,
     floor,
     area,
     room_count,
@@ -22,9 +27,14 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({
     address,
     photos
   }) => {
-    
+    const navigator = useNavigate()
+
+    const handleClick = () => {
+      navigator(`/myapartments/${id}`)
+    }
+
     return (
-      <div className={styles.apartment_card}>
+      <div className={styles.apartment_card} onClick={handleClick}>
         <img
           src={photos.length ? photos[0] : apartmentDefaultPhoto}
           alt="Apartment"
@@ -44,18 +54,15 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({
     );
   };
 
-export const ApartmentGrid: React.FC = observer(() => {
-  const { apartmentStore } = useRootStore();
-
-  useEffect(() => {
-    apartmentStore.fetchApartments();
-  }, [apartmentStore]);
+export const ApartmentGrid: React.FC<ApartmentGridProps> = observer(({ apartments }) => {
+  
 
   return (
     <div className={styles.apartment_grid}>
-      {apartmentStore.apartments.map((apartment) => (
+      {apartments ? apartments.map((apartment) => (
         <ApartmentCard
           key={apartment.id}
+          id={apartment.id}
           area={apartment.area}
           floor={apartment.floor}
           room_count={apartment.room_count}
@@ -63,7 +70,7 @@ export const ApartmentGrid: React.FC = observer(() => {
           address={apartment.address}
           photos={apartment.photos}
         />
-      ))}
+      )) : 'No apartments'}
     </div>
   );
 });

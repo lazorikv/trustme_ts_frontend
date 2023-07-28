@@ -14,6 +14,7 @@ const LoginPage: React.FC = observer(() => {
     try {
       await loginStore.loginUser();
       loginStore.setToken(loginStore.token);
+      loginStore.setUser(loginStore.user)
       navigate("/");
     } catch (error) {
       setErrorValue(true);
