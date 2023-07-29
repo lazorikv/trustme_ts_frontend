@@ -6,3 +6,7 @@ declare namespace NodeJS {
       TRUST_ME_API_URL: string;
     }
   }
+
+  declare module "react/jsx-runtime" {
+    export default any;
+  }

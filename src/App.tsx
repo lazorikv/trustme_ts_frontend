@@ -13,6 +13,7 @@ import MyApartments from './components/myApartments';
 import ApartmentDetails from './components/ApartmentPage';
 import AllApartments from './components/AllApartments';
 import PageTransitionWrapper from './components/PageTransition';
+import ContactForm from './components/ContactForm';
 
 
 const apiUrl = process.env.TRUST_ME_API_URL = 'http://localhost:8000/api/v1'
@@ -37,6 +38,7 @@ const AppContent: React.FC = () => {
         <Route path='/myapartments' element={<MyApartments />} />
         <Route path="/myapartments/:id" element={<ApartmentDetails />} />
         <Route path="/allapartments" element={<AllApartments />} />
+        <Route path="/contactus" element={<ContactForm />} />
       </Routes>
       {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </>
