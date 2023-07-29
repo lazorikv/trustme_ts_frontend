@@ -1,5 +1,6 @@
 import ContactUs from "./ContactUs";
 import Intro from "./Intro";
+import OurManagers from "./Managers/Managers";
 import Recommendations from "./Recommendations";
 
 const MainPage: React.FC = () => {
@@ -8,6 +9,7 @@ const MainPage: React.FC = () => {
         <Intro />
         <Recommendations />
         <ContactUs />
+        <OurManagers />
       </div>
     );
   };

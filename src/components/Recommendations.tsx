@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import styles from '../styles/recomend.module.css';
 import { ApartmentGrid } from './ApartmentCard';
 import { useRootStore } from '../stores/RootStore';
 import { observer } from 'mobx-react';
@@ -15,7 +14,7 @@ export const Recommendations: React.FC = observer(() => {
   return (
     <div>
       <div className="title">Apartments</div>
-      <div className={styles.line}></div>
+      <div className='line'></div>
       <ApartmentGrid apartments={apartmentStore.apartments}/>
       <div>
         <button className='casual_button' onClick={() => {navigator('/allapartments')}}>

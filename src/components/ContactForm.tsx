@@ -20,7 +20,7 @@ const ContactForm: React.FC = observer(() => {
 
       const response = await emailStore.sendEmail(email);
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         emailStore.setEmailSent(true);
         setStatusMessage("Email sent successfully!");
         setFirstName("");
