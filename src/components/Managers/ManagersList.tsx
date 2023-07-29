@@ -24,7 +24,7 @@ const ManagerList: React.FC<ManagerListProps> = ({ managers, onManagerSelect }) 
       }, [managers]);
 
       return (
-        <div>
+        <div className={styles.managerList}>
           <ul>
             {managers.map((manager) => (
               <li

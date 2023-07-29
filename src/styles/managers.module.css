@@ -5,13 +5,13 @@
     margin-top: 40px;
   }
 
-  ul {
+  .managerList ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
   
-  li {
+  .managerList li {
     cursor: pointer;
     padding: 10px;
     display: flex;
@@ -20,13 +20,13 @@
     border-right: 1px solid transparent; 
   }
 
-p {
+  .managerList p {
     text-align: center;
     font-size: 14px;
     margin-top: 10px;
   }
 
-  li.active {
+  .managerList li.active {
     border-right: 1px solid #ccc;
     background-color: #f0f0f0;
   }
