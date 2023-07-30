@@ -1,0 +1,74 @@
+.news-carousel {
+  margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .carousel-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .news-item {
+    width: 30%;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .news-item img {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .news-item p {
+    
+    flex-grow: 1; /* Занимаем все доступное пространство между заголовком и кнопкой "Read more" */
+  }
+
+  .news-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  .news-url {
+    margin-top: 10px;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center; /* Выравниваем текст по центру кнопки */
+    color: blue;
+    text-decoration: none;
+  }
+  
+  .carousel-navigation {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .carousel-navigation button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+  
+  .carousel-navigation button:disabled {
+    color: #8bc2b2;
+    cursor: not-allowed;
+  }

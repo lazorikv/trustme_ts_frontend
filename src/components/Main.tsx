@@ -2,6 +2,7 @@ import ContactUs from "./ContactUs";
 import Intro from "./Intro";
 import OurManagers from "./Managers/Managers";
 import Recommendations from "./Recommendations";
+import News from "./news";
 
 const MainPage: React.FC = () => {
     return (
@@ -10,6 +11,7 @@ const MainPage: React.FC = () => {
         <Recommendations />
         <ContactUs />
         <OurManagers />
+        <News />
       </div>
     );
   };
