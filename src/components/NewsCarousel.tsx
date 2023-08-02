@@ -49,7 +49,7 @@ const navigator = useNavigate();
         <h3>{news.title}</h3>
         <p>{news.text}</p>
         <div className='news-url'>
-        <a>Read more</a>
+        <p>Read more</p>
         </div>
       </div>
     ));

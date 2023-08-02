@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 const MyApartments: React.FC = observer(() => {
     const { loginStore, apartmentStore } = useRootStore();
     const [isLoading, setIsLoading] = useState(true);
-  
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -19,14 +19,14 @@ const MyApartments: React.FC = observer(() => {
             console.error('Error fetching user:', error);
           }
         };
-    
+
         fetchData();
       }, [apartmentStore, loginStore.user]);
-  
+
       if (isLoading) {
         return <div>Loading...</div>;
       }
-    
+
       return (
         <div>
             <div className='title'>

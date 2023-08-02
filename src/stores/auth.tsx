@@ -137,7 +137,7 @@ export class LoginFormModel {
       this.token = response.data.token;
       this.user = response.data.user;
     }
-  
+
     setToken(token:string) {
       localStorage.setItem('token', token);
     }

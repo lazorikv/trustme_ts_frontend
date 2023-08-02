@@ -25,7 +25,7 @@ export class Address {
 
 export class ApartmentCreate {
   floor: string;
-  address: Address;
+  addressId: Address;
   is_rented: boolean;
   room_count: string;
   area: string;
@@ -36,7 +36,7 @@ export class ApartmentCreate {
 
   constructor(
     floor: string,
-    address: Address,
+    addressId: Address,
     room_count: string,
     area: string,
     is_rented: boolean,
@@ -46,14 +46,14 @@ export class ApartmentCreate {
     photos?: File[] | undefined
   ) {
     this.floor = floor;
-    this.address = address;
+    this.addressId = addressId;
     this.room_count = room_count;
     this.area = area;
     this.cost = cost;
     this.title = title;
     this.description = description;
     this.photos = photos;
-    this.is_rented = is_rented
+    this.is_rented = is_rented;
   }
 }
 
@@ -68,7 +68,7 @@ export class Apartment {
   description: string;
   landlordId: number;
   tenantId?: number | undefined;
-  photos: string[]
+  photos: string[];
 
   constructor(
     id: number,
@@ -110,16 +110,16 @@ export class ApartmentStore {
       apartments: observable,
       apartment: observable,
       totalCount: observable,
-      currentPage:observable,
+      currentPage: observable,
       itemsPerPage: observable,
       landlordApartments: observable,
       fetchApartments: action,
       setCurrentPage: action,
       fetchApartment: action,
       addApartment: action,
+      searchApartments: action,
     });
   }
-
 
   async fetchApartments(): Promise<void> {
     try {
@@ -137,20 +137,46 @@ export class ApartmentStore {
           page,
           limit,
         },
-        
       });
       this.apartments = response.data[0];
-      this.totalCount = response.data[1].length
-      
-    }
-    catch(error) {
+      this.totalCount = response.data[1].length;
+    } catch (error) {
       console.error("Error fetching apartments:", error);
     }
-   }
+  }
 
-   setCurrentPage = (page: number) => {
+  setCurrentPage = (page: number) => {
     this.currentPage = page;
   };
+
+  async searchApartments(
+    location: string,
+    rooms: string | undefined,
+    floor: string | undefined,
+    minPrice: string | undefined,
+    maxPrice: string | undefined,
+    page: number | undefined,
+    limit: number | undefined
+  ): Promise<void> {
+    try {
+      const response = await api.get("/apartment/search", {
+        params: {
+          location,
+          rooms,
+          floor,
+          minPrice,
+          maxPrice,
+          page,
+          limit,
+        },
+      });
+
+      this.apartments = response.data[0];
+      this.totalCount = response.data[1];
+    } catch (error) {
+      console.error("Error fetching apartments:", error);
+    }
+  }
 
   async fetchApartment(id: string): Promise<void> {
     try {
@@ -160,7 +186,6 @@ export class ApartmentStore {
       console.error("Error fetching tasks:", error);
     }
   }
-
 
   async fetchLandlordApartments(id: number): Promise<void> {
     try {
@@ -174,7 +199,7 @@ export class ApartmentStore {
   async addApartment(apartment: ApartmentCreate): Promise<void> {
     const { photos, ...rest } = apartment;
     const data = JSON.stringify(rest);
-  
+
     try {
       const formData = new FormData();
       formData.append("data", data);
@@ -186,10 +211,10 @@ export class ApartmentStore {
       const response = await api.post("/apartment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Token": localStorage.getItem('token')
+          Token: localStorage.getItem("token"),
         },
       });
-  
+
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -197,6 +222,6 @@ export class ApartmentStore {
   }
 
   get totalPages() {
-    return Math.ceil(this.totalCount/ this.itemsPerPage);
+    return Math.ceil(this.totalCount / this.itemsPerPage);
   }
 }

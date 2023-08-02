@@ -1,5 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 import { Apartment } from './apartment';
+import { host } from '../App';
+
 
 export class User {
     id: number;
@@ -8,7 +10,7 @@ export class User {
     role: string;
     phone: string;
     apartmentLandlord: Apartment[]
-  
+
     constructor(id: number, title: string, email: string, role: string, phone: string, apartmentLandlord: Apartment[]) {
       this.id = id;
       this.name = title;
@@ -18,11 +20,13 @@ export class User {
       this.apartmentLandlord = apartmentLandlord;
     }
   }
-  
+
   export class UserStore {
     users: User[] = [];
     user: User | null = null;
-  
+
+    
+
     constructor() {
       makeObservable(this, {
           users: observable,
@@ -31,10 +35,10 @@ export class User {
           addUser: action
       })
     }
-  
+
     async fetchUsers(): Promise<void> {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/user');
+        const response = await fetch(`http://${host}:8000/api/v1/user`);
         const users = await response.json();
         this.users = users;
       } catch (error) {
@@ -44,7 +48,7 @@ export class User {
 
     async fetchUser(id:number): Promise<void> {
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/user/landlords/${id}`);
+        const response = await fetch(`http://${host}:8000/api/v1/user/landlords/${id}`);
         const user = await response.json();
         this.user = user;
         console.log(user)
@@ -52,10 +56,10 @@ export class User {
         console.error('Error fetching user:', error);
       }
     }
-  
+
     async addUser(title: string): Promise<void> {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/user', {
+        const response = await fetch(`http://${host}:8000/api/v1/user`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

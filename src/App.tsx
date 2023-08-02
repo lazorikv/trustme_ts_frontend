@@ -14,9 +14,13 @@ import ApartmentDetails from './components/ApartmentPage';
 import AllApartments from './components/AllApartments';
 import PageTransitionWrapper from './components/PageTransition';
 import ContactForm from './components/ContactForm';
+import AboutUs from './components/aboutUs';
+import SearchPage from './components/searchPage';
 
 
-const apiUrl = process.env.TRUST_ME_API_URL = 'http://localhost:8000/api/v1'
+export const host: string = "18.207.213.87"
+
+const apiUrl = process.env.TRUST_ME_API_URL = `http://${process.env.REACT_APP_HOSTNAME}:8000/api/v1`
 
 export const api = axios.create({
   baseURL: apiUrl
@@ -27,6 +31,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
+    <div id='container'>
     {location.pathname !== '/login' && location.pathname !== '/signup' && <SubHeader />}
       {location.pathname !== '/login' && location.pathname !== '/signup' && <Header />}
       <Routes>
@@ -39,8 +44,11 @@ const AppContent: React.FC = () => {
         <Route path="/myapartments/:id" element={<ApartmentDetails />} />
         <Route path="/allapartments" element={<AllApartments />} />
         <Route path="/contactus" element={<ContactForm />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
-      {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
+    </div>
+    {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </>
   );
 };

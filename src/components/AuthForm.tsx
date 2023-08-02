@@ -27,7 +27,7 @@ const SignUpPage: React.FC = observer(() => {
       }, 2000);
     }
   };
-  
+
 
   return (
     <div className="auth_container">

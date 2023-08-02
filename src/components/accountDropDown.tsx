@@ -5,7 +5,7 @@ interface DropdownItem {
     text: string;
     action?: () => void;
   }
-  
+
   interface DropdownProps {
     items: DropdownItem[];
   }

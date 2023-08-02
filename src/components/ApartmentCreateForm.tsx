@@ -11,7 +11,7 @@ const ApartmentCreateForm: React.FC = () => {
   const [area, setArea] = useState('');
   const [cost, setCost] = useState('');
   const [description, setDescription] = useState('');
-  const [is_rented, setIsRented] = useState(false);
+  const [isRented, setIsRented] = useState(false);
   const [addressId, setAddress] = useState<Address>({
     city: '',
     district: '',
@@ -28,7 +28,7 @@ const ApartmentCreateForm: React.FC = () => {
       addressId,
       roomCount,
       area,
-      is_rented,
+      isRented,
       cost,
       title,
       description,
@@ -124,7 +124,7 @@ const ApartmentCreateForm: React.FC = () => {
         Is Rented:
         <input
           type="checkbox"
-          checked={is_rented}
+          checked={isRented}
           onChange={(e) => setIsRented(e.target.checked)}
         />
       </label>

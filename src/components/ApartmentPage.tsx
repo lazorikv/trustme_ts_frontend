@@ -13,7 +13,7 @@ const ApartmentDetails: React.FC = observer(() => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(null);
-  
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -27,10 +27,10 @@ const ApartmentDetails: React.FC = observer(() => {
             console.error('Error fetching apartment:', error);
           }
         };
-    
+
         fetchData();
       }, [apartmentStore, id]);
-  
+
       if (isLoading) {
         return <div>Loading...</div>;
       }

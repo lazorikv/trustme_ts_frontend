@@ -9,27 +9,27 @@
   bottom: 0;
 }
 
-  
-  .footer__contact {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .footer__contact-info {
-    margin-bottom: 10px;
-  }
-  
-  .footer__contact-label {
-    font-weight: bold;
-  }
-  
-  .footer__links {
-    display: flex;
-  }
-  
-  .footer__link-button {
-    margin-right: 10px;
-  }
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__contact-info {
+  margin-bottom: 10px;
+}
+
+.footer__contact-label {
+  font-weight: bold;
+}
+
+.footer__links {
+  display: flex;
+}
+
+.footer__link-button {
+  margin-right: 10px;
+}
   
 
   
