@@ -15,6 +15,8 @@
     "@types/react-autocomplete": "^1.8.6",
     "@types/react-dom": "^18.2.7",
     "@types/react-select": "^5.0.1",
+    "@types/react-slick": "^0.23.10",
+    "@types/slick-carousel": "^1.6.37",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "mobx": "^6.10.0",
@@ -27,6 +29,9 @@
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
     "react-select-async-paginate": "^0.7.3",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.0.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

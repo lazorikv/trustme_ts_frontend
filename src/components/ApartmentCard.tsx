@@ -42,7 +42,7 @@ export const ApartmentCard: React.FC<ApartmentCardProps> = ({
         />
         <div className={styles.apartment_card__content}>
           <p>
-            <img className={styles.icon} src={locationIcon} alt="Icon" /> {address.district}, {address.city}, st. {address.street},{" "}
+            <img className={styles.icon} src={locationIcon} alt="Icon" /> {address.city}, {address.district}, st. {address.street},{" "}
             {address.house_number}, {address.apart_number}{" "}
           </p>
           <p>Area: {area}</p>
@@ -55,7 +55,6 @@ export const ApartmentCard: React.FC<ApartmentCardProps> = ({
   };
 
 export const ApartmentGrid: React.FC<ApartmentGridProps> = observer(({ apartments }) => {
-  console.log(apartments)
   return (
     <div className={styles.apartment_grid}>
       {apartments ? apartments.map((apartment) => (

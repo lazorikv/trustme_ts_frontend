@@ -16,6 +16,7 @@ import PageTransitionWrapper from './components/PageTransition';
 import ContactForm from './components/ContactForm';
 import AboutUs from './components/aboutUs';
 import SearchPage from './components/searchPage';
+import SideComponent from './components/Profile/SideComponent';
 
 
 export const host: string = "18.207.213.87"
@@ -46,6 +47,7 @@ const AppContent: React.FC = () => {
         <Route path="/contactus" element={<ContactForm />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/profile" element={<SideComponent />} />
       </Routes>
     </div>
     {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}

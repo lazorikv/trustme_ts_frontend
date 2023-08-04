@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../styles/main.module.css";
 import { useNavigate } from "react-router-dom";
 
-export const Intro: React.FC = () => {
+const Intro: React.FC = () => {
   const [location, setLocation] = useState("");
   const [rooms, setRooms] = useState("");
   const [floor, setFloor] = useState("");
@@ -12,7 +12,6 @@ export const Intro: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    
     const queryParams = new URLSearchParams({
       locationValue: location,
       floor,
@@ -29,6 +28,18 @@ export const Intro: React.FC = () => {
     setMaxPrice("");
   };
 
+  const generateNumberOptions = (start: number, end: number) => {
+    const options = [];
+    for (let i = start; i <= end; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return options;
+  };
+
   return (
     <div>
       <div className={styles.background_image} />
@@ -43,20 +54,22 @@ export const Intro: React.FC = () => {
             />
           </div>
           <div className={styles.section}>
-            <input
-              type="text"
-              placeholder="Rooms"
+            <select
               value={rooms}
               onChange={(e) => setRooms(e.target.value)}
-            />
+            >
+              <option value="">Select Rooms</option>
+              {generateNumberOptions(1, 4)}
+            </select>
           </div>
           <div className={styles.section}>
-            <input
-              type="text"
-              placeholder="Floor"
+            <select
               value={floor}
               onChange={(e) => setFloor(e.target.value)}
-            />
+            >
+              <option value="">Select Floor</option>
+              {generateNumberOptions(1, 9)}
+            </select>
           </div>
           <div className={styles.section}>
             <input

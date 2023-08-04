@@ -152,3 +152,25 @@ a, span {
   margin-top: 70px;
   font-size: 25px;
 }
+
+.carousel-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.carousel-navigation button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+.carousel-navigation button:disabled {
+  color: #8bc2b2;
+  cursor: not-allowed;
+}

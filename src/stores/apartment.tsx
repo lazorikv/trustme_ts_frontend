@@ -23,6 +23,25 @@ export class Address {
   }
 }
 
+export class Landlord {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+
+  constructor(
+    id: number,
+  name: string,
+  email: string,
+  phone: string
+  ) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+  }
+}
+
 export class ApartmentCreate {
   floor: string;
   addressId: Address;
@@ -66,7 +85,7 @@ export class Apartment {
   cost: number;
   title: string;
   description: string;
-  landlordId: number;
+  landlord: Landlord;
   tenantId?: number | undefined;
   photos: string[];
 
@@ -79,7 +98,7 @@ export class Apartment {
     cost: number,
     title: string,
     description: string,
-    landlordId: number,
+    landlord: Landlord,
     tenantId: number | undefined,
     photos: string[]
   ) {
@@ -91,7 +110,7 @@ export class Apartment {
     this.cost = cost;
     this.title = title;
     this.description = description;
-    this.landlordId = landlordId;
+    this.landlord = landlord;
     this.tenantId = tenantId;
     this.photos = photos;
   }
@@ -104,6 +123,8 @@ export class ApartmentStore {
   currentPage = 1;
   itemsPerPage = 9;
   totalCount = 0;
+  error = null;
+  response: any;
 
   constructor() {
     makeObservable(this, {
@@ -113,6 +134,7 @@ export class ApartmentStore {
       currentPage: observable,
       itemsPerPage: observable,
       landlordApartments: observable,
+      error: observable,
       fetchApartments: action,
       setCurrentPage: action,
       fetchApartment: action,
@@ -137,6 +159,9 @@ export class ApartmentStore {
           page,
           limit,
         },
+        headers : {
+          Authorization: localStorage.getItem("token")
+        }
       });
       this.apartments = response.data[0];
       this.totalCount = response.data[1].length;
@@ -200,7 +225,7 @@ export class ApartmentStore {
     const { photos, ...rest } = apartment;
     const data = JSON.stringify(rest);
 
-    try {
+
       const formData = new FormData();
       formData.append("data", data);
       if (photos) {
@@ -211,14 +236,12 @@ export class ApartmentStore {
       const response = await api.post("/apartment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Token: localStorage.getItem("token"),
+          Authorization: localStorage.getItem("token"),
         },
+      }).catch(err => {
+          this.error = err
       });
 
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   get totalPages() {

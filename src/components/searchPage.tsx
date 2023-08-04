@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import SearchApartments from "./searchApartments"; // Update the import path accordingly
+import SearchApartments from "./searchApartments";
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -14,7 +14,6 @@ const SearchPage: React.FC = () => {
 
   return (
     <div>
-      {/* Pass the input props to the SearchApartments component */}
       <SearchApartments
         locationValue={locationValue}
         floor={floor}

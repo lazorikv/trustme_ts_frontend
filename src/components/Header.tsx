@@ -4,8 +4,9 @@ import { useRootStore } from "../stores/RootStore";
 import React, { useEffect, useRef, useState } from "react";
 import Dropdown from "./accountDropDown";
 import { accountDropDownPhoto } from "../constants";
+import { observer } from "mobx-react";
 
-export const Header: React.FC = () => {
+export const Header: React.FC = observer(() => {
   const { loginStore } = useRootStore();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -13,14 +14,14 @@ export const Header: React.FC = () => {
 
   const dropdownItems = [
     {
-      text: 'Account',
+      text: 'Profile',
       action: () => {
-        navigator('/account');
+        navigator('/profile');
         setIsDropdownOpen(false);
       },
     },
     {
-      text: 'My Apartment',
+      text: 'My Apartments',
       action: () => {
         setIsDropdownOpen(false);
         navigator('/myapartments');
@@ -49,9 +50,15 @@ export const Header: React.FC = () => {
     };
   }, []);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
   };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
     <header className={styles.header}>
@@ -68,52 +75,66 @@ export const Header: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link to="/apartments" className={styles.link}>
-              Apartments
-            </Link>
-          </li>
-          <li>
             <Link to="/news" className={styles.link}>
               News
             </Link>
           </li>
           <li>
-          <div className={styles.dropDown} ref={dropdownRef}>
-          {isDropdownOpen && <Dropdown items={dropdownItems} />}
-        <div onClick={toggleDropdown}>
-          <img className={styles.accountDropDown_photo} src={accountDropDownPhoto} alt="User" />
-        </div>
-        </div>
+            <div
+              className={styles.dropDown}
+              ref={dropdownRef}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {user.name ? (
+                <div className={styles.dropdownToggle}>
+                  <span className={styles.link}>{user.name}</span>
+                  <span className={styles.dropdownArrow}></span>
+                  {isDropdownOpen && <Dropdown items={dropdownItems} />}
+                </div>
+              ) : (
+                <>
+                  <Link to="/signup" className={styles.link}>
+                    Sign Up
+                  </Link>
+                  <Link to="/login" className={styles.link}>
+                    Login
+                  </Link>
+                </>
+              )}
+            </div>
           </li>
         </ul>
       </nav>
     </header>
   );
-};
+});
+
+export default Header;
 
 export const SubHeader: React.FC = () => {
   return (
     <div className={styles.subheader}>
       <div className={styles.contact_info}>
         <span className={styles.phone}>+1-123-456-7890</span>
-        <span className={styles.email}>Email: example@example.com</span>
+        <span className={styles.email}>Email: lazorkinv@gmail.com</span>
       </div>
       <div className={styles.social_icons}>
         <a
-          href="https://www.flaticon.com/free-icons/twitter-social-badge"
-          title="twitter social badge icons"
+          href="https://github.com/lazorikv"
+          title="My GitHub"
         >
-          Twitter
+          GitHub
         </a>
         <a
-          href="https://www.flaticon.com/free-icons/linkedin"
-          title="linkedin icons"
+          href="https://www.linkedin.com/in/vladyslav-lazoryk-705631217/"
+          title="Linkedin"
         >
           Linkedin
         </a>
         <a
-          href="https://www.flaticon.com/free-icons/instagram-logo"
-          title="instagram logo icons"
+          href="https://www.instagram.com/pan_ado1f/"
+          title="Instagram"
         >
           Instagram
         </a>

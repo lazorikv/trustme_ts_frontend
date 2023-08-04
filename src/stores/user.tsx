@@ -1,6 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 import { Apartment } from './apartment';
-import { host } from '../App';
+import { api, host } from '../App';
+import { AxiosResponse } from 'axios';
 
 
 export class User {
@@ -9,7 +10,7 @@ export class User {
     email: string;
     role: string;
     phone: string;
-    apartmentLandlord: Apartment[]
+    apartmentLandlord?: Apartment[]
 
     constructor(id: number, title: string, email: string, role: string, phone: string, apartmentLandlord: Apartment[]) {
       this.id = id;
@@ -24,6 +25,7 @@ export class User {
   export class UserStore {
     users: User[] = [];
     user: User | null = null;
+    error = null;
 
     
 
@@ -31,6 +33,7 @@ export class User {
       makeObservable(this, {
           users: observable,
           user: observable,
+          error: observable,
           fetchUsers: action,
           addUser: action
       })
@@ -51,7 +54,6 @@ export class User {
         const response = await fetch(`http://${host}:8000/api/v1/user/landlords/${id}`);
         const user = await response.json();
         this.user = user;
-        console.log(user)
       } catch (error) {
         console.error('Error fetching user:', error);
       }
@@ -70,6 +72,27 @@ export class User {
         this.users.push(user);
       } catch (error) {
         console.error('Error adding user:', error);
+      }
+    }
+
+    async editUser(userData:any): Promise<void> {
+
+      const {userId, ...rest} = userData;
+
+      const data = JSON.stringify(rest);
+
+      try {
+        const response: AxiosResponse = await api.put(`/user/${userId}`, data, {
+          headers: {
+            "Content-Type": 'application/json',
+            Authorization: localStorage.getItem("token"),
+          }
+        });
+        this.user = response.data;
+        localStorage.setItem("user", JSON.stringify(this.user));
+      } catch (err) {
+        this.error = err;
+        console.error(err);
       }
     }
   }

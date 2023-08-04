@@ -25,12 +25,20 @@
   min-height: 60px;
   flex: 1; /* равномерное распределение по ширине */
   border: 1px solid rgb(82, 80, 80);
-  background-color: #c4ebe0;
+  background-color: #fff;
   text-align: center;
 }
 
-.section input {
+.section input, select {
   padding: 10px;
+  font-size: medium;
+  margin-top: 10px;
+  background-color: #fff;
+  border: none;
+}
+
+.section option {
+  font-size: medium;
   margin-top: 10px;
 }
 

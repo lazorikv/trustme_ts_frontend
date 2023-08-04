@@ -1,0 +1,50 @@
+.container {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    gap: 40px
+}
+
+.slideItem {
+    display: flex;
+    padding: 20px;
+    padding-left: 40px;
+    align-items: center;
+}
+
+.slideItem:hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.slideItem img {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background-color: #c4ebe0;
+  }
+
+.active {
+    background-color: #fff;
+    position: relative; 
+}
+
+.slideItem:active {
+    background-color: #fff;
+}
+
+.slideContainer {
+    margin-top: 40px;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    height: 40vh;
+}

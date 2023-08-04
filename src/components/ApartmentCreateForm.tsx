@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useRootStore } from "../stores/RootStore";
 import { Address, ApartmentCreate } from "../stores/apartment";
 import styles from '../styles/apartment.module.css'
+import UnauthorizedPopup from "../popUps/unAuth";
+import { handleLoginClick } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 
 const ApartmentCreateForm: React.FC = () => {
@@ -11,6 +14,7 @@ const ApartmentCreateForm: React.FC = () => {
   const [area, setArea] = useState('');
   const [cost, setCost] = useState('');
   const [description, setDescription] = useState('');
+  const [showUnauthorizedPopup, setShowUnauthorizedPopup] = useState(false);
   const [isRented, setIsRented] = useState(false);
   const [addressId, setAddress] = useState<Address>({
     city: '',
@@ -22,7 +26,9 @@ const ApartmentCreateForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigator = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     const apartment = new ApartmentCreate(
       floor,
       addressId,
@@ -35,7 +41,12 @@ const ApartmentCreateForm: React.FC = () => {
       photos
     );
     e.preventDefault();
-    apartmentStore.addApartment(apartment);
+    
+    await apartmentStore.addApartment(apartment);
+    if (apartmentStore.error && apartmentStore.error['response']['status'] === 401) {
+        setShowUnauthorizedPopup(true);
+    }
+    
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,6 +168,9 @@ const ApartmentCreateForm: React.FC = () => {
 
       <button type="submit">Submit</button>
     </form>
+    {showUnauthorizedPopup && (
+        <UnauthorizedPopup onLoginClick={() => handleLoginClick(navigator)} />
+      )}
     </div>
   );
 };
