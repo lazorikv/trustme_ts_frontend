@@ -28,6 +28,7 @@ export class SignUpFormModel {
   password = '';
   role = 'landlord';
   phone = '';
+  error = null;
 
   constructor() {
     makeObservable(this, {
@@ -36,6 +37,7 @@ export class SignUpFormModel {
       password: observable,
       role: observable,
       phone: observable,
+      error: observable,
       setName: action,
       setEmail: action,
       setPassword: action,
@@ -71,13 +73,18 @@ export class SignUpFormModel {
           'Content-Type': 'application/json',
         },
   }
-    await api.post('/signup', {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-      role: this.role,
-      phone: this.phone,
-    }, config);
+    try {
+      await api.post('/signup', {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        role: this.role,
+        phone: this.phone,
+      }, config);
+    }
+    catch (error) {
+      this.error = error
+    }
   }
 }
 
@@ -86,6 +93,7 @@ export class LoginFormModel {
   password = '';
   token = '';
   user: User | null = null;
+  error = null
 
   constructor() {
     makeObservable(this, {
@@ -93,6 +101,7 @@ export class LoginFormModel {
       password: observable,
       token: observable,
       user: observable,
+      error: observable,
       setEmail: action,
       setPassword: action,
       setUser: action,
@@ -130,14 +139,18 @@ export class LoginFormModel {
 
   async loginUser(): Promise<void> {
 
-    const response = await api.post('/login', {
+    try {
+      const response = await api.post('/login', {
         email: this.email,
         password: this.password,
       })
       this.token = response.data.token;
       this.user = response.data.user;
     }
-
+    catch (error) {
+      this.error = error
+    }
+  }
     setToken(token:string) {
       localStorage.setItem('token', token);
     }

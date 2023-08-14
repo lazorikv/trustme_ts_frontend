@@ -23,18 +23,25 @@ export class Address {
   }
 }
 
+export class ApartmentPhoto {
+  id: number;
+  url: string;
+  apartmentId: string;
+
+  constructor(id: number, url: string, apartmentId: string) {
+    this.id = id;
+    this.url = url;
+    this.apartmentId = apartmentId;
+  }
+}
+
 export class Landlord {
   id: number;
   name: string;
   email: string;
   phone: string;
 
-  constructor(
-    id: number,
-  name: string,
-  email: string,
-  phone: string
-  ) {
+  constructor(id: number, name: string, email: string, phone: string) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -87,7 +94,7 @@ export class Apartment {
   description: string;
   landlord: Landlord;
   tenantId?: number | undefined;
-  photos: string[];
+  photos: ApartmentPhoto[];
 
   constructor(
     id: number,
@@ -100,7 +107,7 @@ export class Apartment {
     description: string,
     landlord: Landlord,
     tenantId: number | undefined,
-    photos: string[]
+    photos: ApartmentPhoto[]
   ) {
     this.id = id;
     this.floor = floor;
@@ -124,7 +131,9 @@ export class ApartmentStore {
   itemsPerPage = 9;
   totalCount = 0;
   error = null;
+  apartmentPhotos: ApartmentPhoto[] = [];
   response: any;
+  isLoading: boolean = false;
 
   constructor() {
     makeObservable(this, {
@@ -134,12 +143,17 @@ export class ApartmentStore {
       currentPage: observable,
       itemsPerPage: observable,
       landlordApartments: observable,
+      apartmentPhotos: observable,
       error: observable,
+      isLoading: observable,
       fetchApartments: action,
+      fetchApartmentPhotos: action,
+      deleteApartmentPhoto: action,
       setCurrentPage: action,
       fetchApartment: action,
       addApartment: action,
       searchApartments: action,
+      addApartmentPhoto: action,
     });
   }
 
@@ -148,6 +162,7 @@ export class ApartmentStore {
       const response = await api.get("/apartment/rec");
       this.apartments = await response.data;
     } catch (error) {
+      this.error = error
       console.error("Error fetching apartments:", error);
     }
   }
@@ -159,13 +174,14 @@ export class ApartmentStore {
           page,
           limit,
         },
-        headers : {
-          Authorization: localStorage.getItem("token")
-        }
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
       this.apartments = response.data[0];
       this.totalCount = response.data[1].length;
     } catch (error) {
+      this.error = error
       console.error("Error fetching apartments:", error);
     }
   }
@@ -195,10 +211,10 @@ export class ApartmentStore {
           limit,
         },
       });
-
       this.apartments = response.data[0];
       this.totalCount = response.data[1];
     } catch (error) {
+      this.error = error
       console.error("Error fetching apartments:", error);
     }
   }
@@ -217,31 +233,74 @@ export class ApartmentStore {
       const response = await api.get(`/apartment/${id}/landlord`);
       this.landlordApartments = await response.data;
     } catch (error) {
+      this.error = error
       console.error("Error fetching tasks:", error);
     }
   }
 
   async addApartment(apartment: ApartmentCreate): Promise<void> {
-    const { photos, ...rest } = apartment;
-    const data = JSON.stringify(rest);
-
-
+    try {
+      const { photos, ...rest } = apartment;
+      const data = JSON.stringify(rest);
+  
       const formData = new FormData();
       formData.append("data", data);
-      if (photos) {
-        photos.forEach((photo) => {
-          formData.append("photos", photo);
-        });
-      }
+  
       const response = await api.post("/apartment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: localStorage.getItem("token"),
+          Authorization: localStorage.getItem("token") || "",
         },
-      }).catch(err => {
-          this.error = err
       });
+  
+      if (photos) {
+        const photoFormData = new FormData();
+        photos.forEach((file) => photoFormData.append("photos", file));
+  
+        await this.addApartmentPhoto(response.data.id, photoFormData);
+      }
+    } catch (error) {
+      this.error = error
+      console.error("Error adding apartment:", error);
+    }
+  }
 
+  async fetchApartmentPhotos(apartmentId: number): Promise<void> {
+    const response: any = await api
+      .get(`/apartment/${apartmentId}/photos`)
+      .catch((error) => {
+        this.error = error;
+      });
+    this.apartmentPhotos = response.data;
+  }
+
+  async deleteApartmentPhoto(photoId: number): Promise<void> {
+    await api.delete(`/apartment/photo/${photoId}`).catch((error) => {
+      this.error = error;
+    });
+  }
+
+  async addApartmentPhoto(
+    apartmentId: number,
+    formData: FormData
+  ): Promise<void> {
+    try {
+      this.isLoading = true;
+      const response = await api.post(
+        `/apartment/${apartmentId}/photos`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      this.isLoading = false;
+      this.apartmentPhotos.push(response.data);
+    } catch (error) {
+      this.isLoading = false;
+      this.error = error;
+    }
   }
 
   get totalPages() {

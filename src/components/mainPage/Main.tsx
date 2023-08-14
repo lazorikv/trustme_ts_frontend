@@ -1,8 +1,8 @@
-import ContactUs from "./ContactUs";
+import ContactUs from "../contactUs/ContactUs";
 import Intro from "./Intro";
-import OurManagers from "./Managers/Managers";
+import OurManagers from "../Managers/Managers";
 import Recommendations from "./Recommendations";
-import News from "./news";
+import News from "../News/news";
 
 const MainPage: React.FC = () => {
     return (

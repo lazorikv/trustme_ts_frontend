@@ -27,6 +27,7 @@ export class EmailFormModel {
   lastName = "";
   emailBody = "";
   emailSent = false;
+  error = null;
 
   constructor() {
     makeObservable(this, {
@@ -35,6 +36,7 @@ export class EmailFormModel {
       lastName: observable,
       emailBody: observable,
       emailSent: observable,
+      error: observable,
       sendEmail: action,
       setEmailSent: action,
     });
@@ -44,7 +46,7 @@ export class EmailFormModel {
     this.emailSent = isSent;
   }
 
-  async sendEmail(email: Email): Promise<AxiosResponse<any, any>> {
+  async sendEmail(email: Email): Promise<any> {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -60,8 +62,7 @@ export class EmailFormModel {
       );
       return response;
     } catch (error) {
-      console.log(error);
-      throw error;
+      this.error = error
     }
   }
 }

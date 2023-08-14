@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Email } from "../stores/email";
-import { useRootStore } from "../stores/RootStore";
-import styles from "../styles/contactUs.module.css";
+import { Email } from "../../stores/email";
+import { useRootStore } from "../../stores/RootStore";
+import styles from "../../styles/contactUs.module.css";
+import ErrorPopup from "../../popUps/Error";
 
 const ContactForm: React.FC = observer(() => {
   const { emailStore } = useRootStore();
@@ -12,6 +13,7 @@ const ContactForm: React.FC = observer(() => {
   const [emailValue, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,6 +21,11 @@ const ContactForm: React.FC = observer(() => {
       const email = new Email(emailValue, firstName, lastName, message);
 
       const response = await emailStore.sendEmail(email);
+      if (emailStore.error) {
+        if (emailStore.error['response'] && emailStore.error['response']['status'] === 500) {
+          setError('Internal server error. Please try again later.');
+        }
+      }
 
       if (response.status === 200) {
         emailStore.setEmailSent(true);
@@ -84,6 +91,7 @@ const ContactForm: React.FC = observer(() => {
         <button type="submit">Submit</button>
         <div className="error-message">{statusMessage}</div>
       </form>
+      {error && <ErrorPopup message={error}/>}
     </div>
   );
 });

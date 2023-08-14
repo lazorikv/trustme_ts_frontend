@@ -1,22 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import ApartmentCreateForm from './components/ApartmentCreateForm';
-import UserList from './components/UserList';
+import ApartmentCreateForm from './components/Apartments/ApartmentCreateForm';
 import { RootStore, RootStoreContext } from './stores/RootStore';
-import SignUpPage from './components/AuthForm';
-import LoginPage from './components/LoginForm';
-import { Header, SubHeader} from './components/Header';
+import SignUpPage from './components/Auth/AuthForm';
+import LoginPage from './components/Auth/LoginForm';
+import { Header, SubHeader} from './components/Header/Header';
 import Footer from './components/Footer';
-import MainPage from './components/Main';
-import MyApartments from './components/myApartments';
-import ApartmentDetails from './components/ApartmentPage';
-import AllApartments from './components/AllApartments';
-import PageTransitionWrapper from './components/PageTransition';
-import ContactForm from './components/ContactForm';
-import AboutUs from './components/aboutUs';
-import SearchPage from './components/searchPage';
+import MainPage from './components/mainPage/Main';
+import ApartmentDetails from './components/Apartments/ApartmentPage';
+import AllApartments from './components/Apartments/AllApartments';
+import ContactForm from './components/contactUs/ContactForm';
+import AboutUs from './components/mainPage/aboutUs';
+import SearchPage from './components/searchApartments/searchPage';
 import SideComponent from './components/Profile/SideComponent';
+import PageTransitionWrapper from './utils';
 
 
 export const host: string = "18.207.213.87"
@@ -37,11 +35,9 @@ const AppContent: React.FC = () => {
       {location.pathname !== '/login' && location.pathname !== '/signup' && <Header />}
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/users" element={<UserList />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path='/apartments' element={<ApartmentCreateForm />} />
-        <Route path='/myapartments' element={<MyApartments />} />
         <Route path="/myapartments/:id" element={<ApartmentDetails />} />
         <Route path="/allapartments" element={<AllApartments />} />
         <Route path="/contactus" element={<ContactForm />} />

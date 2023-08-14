@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
-import { useRootStore } from '../stores/RootStore';
+import { useRootStore } from '../../stores/RootStore';
+import ErrorPopup from '../../popUps/Error';
 
 
 
@@ -10,12 +11,18 @@ const SignUpPage: React.FC = observer(() => {
     const { signUpStore, loginStore } = useRootStore();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('')
+  const [error, setError] = useState<string | null>(null);
 
 
   const handleSignUpSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
         await signUpStore.signUpUser()
+        if (signUpStore.error) {
+          if (signUpStore.error['response'] && signUpStore.error['response']['status'] === 500) {
+            setError('Internal server error. Please try again later.');
+          }
+        }
         loginStore.setToken(loginStore.token)
         navigate('/users');
     } catch (error) {
@@ -93,6 +100,7 @@ const SignUpPage: React.FC = observer(() => {
         </p>
       </form>
       <div className="error-message">{errorMessage}</div>
+      {error && <ErrorPopup message={error}/>}
     </div>
   );
 });

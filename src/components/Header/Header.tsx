@@ -1,9 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../styles/headerStyles.module.css";
-import { useRootStore } from "../stores/RootStore";
+import styles from "../../styles/headerStyles.module.css";
+import { useRootStore } from "../../stores/RootStore";
 import React, { useEffect, useRef, useState } from "react";
 import Dropdown from "./accountDropDown";
-import { accountDropDownPhoto } from "../constants";
 import { observer } from "mobx-react";
 
 export const Header: React.FC = observer(() => {

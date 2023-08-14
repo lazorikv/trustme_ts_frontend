@@ -2,8 +2,9 @@ import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import styles from "../../styles/sideComponent.module.css";
 import UserComponent from "./UserComponent";
-import MyApartments from "../myApartments";
+import MyApartments from "./myApartments";
 import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const SideComponent: React.FC = observer(() => {
   const [activeComponent, setActiveComponent] = useState('Profile');
@@ -20,6 +21,7 @@ const SideComponent: React.FC = observer(() => {
   };
 
   return (
+    <Router>
     <div className={styles.container}>
       <div className={styles.slideContainer}>
         <div
@@ -72,11 +74,15 @@ const SideComponent: React.FC = observer(() => {
         </div>
       </div>
       <div className={styles.contentPanel}>
-        {activeComponent === "Profile" && <UserComponent />}
-        {activeComponent === "MyApartments" && <MyApartments />}
-        {activeComponent === "Support" && <UserComponent />}
+      <Routes>
+          <div className={styles.contentPanel}>
+            <Route path="/Profile" element={<UserComponent />} />
+            <Route path="/MyApartments" element={<MyApartments />} />
+          </div>
+        </Routes>
       </div>
     </div>
+    </Router>
   );
 });
 

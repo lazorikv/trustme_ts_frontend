@@ -36,10 +36,14 @@
   background-color: #fff;
   border: none;
 }
+.section select {
+  cursor: pointer;
+}
 
 .section option {
   font-size: medium;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .section p {

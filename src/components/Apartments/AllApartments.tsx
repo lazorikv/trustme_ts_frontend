@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRootStore } from "../stores/RootStore";
-import { Address } from "../stores/apartment";
+import { useRootStore } from "../../stores/RootStore";
+import { Address } from "../../stores/apartment";
 import { ApartmentGrid } from "./ApartmentCard";
-import styles from "../styles/apartment.module.css";
+import styles from "../../styles/apartment.module.css";
+import ErrorPopup from "../../popUps/Error";
 
 export interface ApartmentCardProps {
   id: number;
@@ -17,6 +18,9 @@ export interface ApartmentCardProps {
 }
 
 const AllApartments: React.FC = observer(() => {
+
+  const [error, setError] = useState<string | null>(null);
+
   const { apartmentStore } = useRootStore();
 
   const location = useLocation();
@@ -24,14 +28,15 @@ const AllApartments: React.FC = observer(() => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(apartmentStore.currentPage, apartmentStore.itemsPerPage);
-      try {
-        await apartmentStore.fetchAllApartments(
-          apartmentStore.currentPage,
-          apartmentStore.itemsPerPage
-        );
-      } catch (error) {
-        console.error("Error fetching apartment:", error);
+
+      await apartmentStore.fetchAllApartments(
+        apartmentStore.currentPage,
+        apartmentStore.itemsPerPage
+      );
+      if (apartmentStore.error) {
+        if (apartmentStore.error['response'] && apartmentStore.error['response']['status'] === 500) {
+          setError('Internal server error. Please try again later.');
+        }
       }
     };
 
@@ -48,11 +53,12 @@ const AllApartments: React.FC = observer(() => {
     apartmentStore.setCurrentPage(page);
   };
 
+
   return (
     <div>
       <div className="title">Apartments</div>
       <ApartmentGrid apartments={apartmentStore.apartments} />
-      <div className={styles.pagination}>
+      {apartmentStore.totalPages > 1 ? (<div className={styles.pagination}>
         {Array.from({ length: apartmentStore.totalPages }).map((_, index) => (
           <button
             key={index}
@@ -64,7 +70,8 @@ const AllApartments: React.FC = observer(() => {
             {index + 1}
           </button>
         ))}
-      </div>
+      </div>) : null}
+      {error && <ErrorPopup message={error}/>}
     </div>
   );
 });

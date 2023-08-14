@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/accountDropDown.module.css";
+import styles from "../../styles/accountDropDown.module.css";
 
 interface DropdownItem {
   text: string;

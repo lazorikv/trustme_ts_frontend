@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import '../styles/NewsCarousel.css'; // Создайте файл для стилей
+import '../../styles/NewsCarousel.css';
 import { useNavigate } from 'react-router-dom';
 
-// Тип данных для новости
+
 type NewsItem = {
   id: number;
   title: string;

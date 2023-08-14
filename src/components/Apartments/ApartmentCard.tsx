@@ -1,7 +1,7 @@
-import styles from "../styles/apartment.module.css";
+import styles from "../../styles/apartment.module.css";
 import { observer } from "mobx-react";
-import { Address, Apartment } from "../stores/apartment";
-import { apartmentDefaultPhoto, locationIcon } from "../constants";
+import { Address, Apartment } from "../../stores/apartment";
+import { apartmentDefaultPhoto, locationIcon } from "../../constants";
 import { useNavigate } from "react-router-dom";
 
 export interface ApartmentCardProps {
@@ -66,7 +66,7 @@ export const ApartmentGrid: React.FC<ApartmentGridProps> = observer(({ apartment
           room_count={apartment.room_count}
           cost={apartment.cost}
           address={apartment.address}
-          photos={apartment.photos}
+          photos={apartment.photos.map((photo) => (photo.url))}
         />
       )) : 'No apartments'}
     </div>

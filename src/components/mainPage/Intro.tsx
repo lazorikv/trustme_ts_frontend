@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../styles/main.module.css";
+import styles from "../../styles/main.module.css";
 import { useNavigate } from "react-router-dom";
 
 const Intro: React.FC = () => {

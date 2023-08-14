@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ApartmentGrid } from "./ApartmentCard";
-import { useRootStore } from "../stores/RootStore";
+import { ApartmentGrid } from "../Apartments/ApartmentCard";
+import { useRootStore } from "../../stores/RootStore";
 import { observer } from "mobx-react";
-import styles from "../styles/apartment.module.css";
+import styles from "../../styles/apartment.module.css";
+import ErrorPopup from "../../popUps/Error";
 
 export interface SearchApartmentProps {
     locationValue: string,
@@ -23,13 +24,14 @@ const SearchApartments: React.FC<SearchApartmentProps> = observer((
       }
 ) => {
     const { apartmentStore } = useRootStore();
+
+    const [error, setError] = useState<string | null>(null);
   
     const location = useLocation();
     const navigate = useNavigate();
   
     useEffect(() => {
       const fetchData = async () => {
-        try {
           await apartmentStore.searchApartments(
             locationValue,
             rooms,
@@ -39,9 +41,11 @@ const SearchApartments: React.FC<SearchApartmentProps> = observer((
             apartmentStore.currentPage,
             apartmentStore.itemsPerPage
           );
-        } catch (error) {
-          console.error("Error fetching apartment:", error);
-        }
+          if (apartmentStore.error) {
+            if (apartmentStore.error['response'] && apartmentStore.error['response']['status'] === 500) {
+              setError('Internal server error. Please try again later.');
+            }
+          }
       };
   
       const searchParams = new URLSearchParams(location.search);
@@ -61,7 +65,7 @@ const SearchApartments: React.FC<SearchApartmentProps> = observer((
       <div>
         <div className="title">Apartments</div>
         {apartmentStore.apartments.length ? <ApartmentGrid apartments={apartmentStore.apartments} /> : "No Apartments"}
-        <div className={styles.pagination}>
+        {apartmentStore.totalPages > 1 ? (<div className={styles.pagination}>
           {Array.from({ length: apartmentStore.totalPages }).map((_, index) => (
             <button
               key={index}
@@ -73,7 +77,8 @@ const SearchApartments: React.FC<SearchApartmentProps> = observer((
               {index + 1}
             </button>
           ))}
-        </div>
+        </div>) : null}
+        {error && <ErrorPopup message={error} />}
       </div>
     );
   });

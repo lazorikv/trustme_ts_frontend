@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/contactUs.module.css";
+import styles from "../../styles/contactUs.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ContactUs: React.FC = () => {

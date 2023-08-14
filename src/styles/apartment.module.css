@@ -96,11 +96,18 @@
     width: 80%;
     margin: 0 auto;
   }
+
+  .apartment_data p{
+    text-align: left;
+    font-size: large;
+  }
+ 
   
   .image_container img {
     width: 100%;
     height: 400px;
     object-fit: cover;
+    cursor: pointer;
   }
 
   .modal_backdrop {
