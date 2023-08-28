@@ -27,7 +27,7 @@ export class EmailFormModel {
   lastName = "";
   emailBody = "";
   emailSent = false;
-  error = null;
+  error: any;
 
   constructor() {
     makeObservable(this, {

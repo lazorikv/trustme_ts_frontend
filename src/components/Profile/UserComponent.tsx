@@ -44,7 +44,7 @@ const UserComponent: React.FC = observer(() => {
 
       await userStore.editUser(updatedUser);
       if (userStore.error) {
-        if (userStore.error && userStore.error["response"]["status"] === 401) {
+        if (userStore.error["response"]["status"] === 401) {
           setShowUnauthorizedPopup(true);
         }
         if (

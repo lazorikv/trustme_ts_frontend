@@ -25,7 +25,7 @@ export class User {
   export class UserStore {
     users: User[] = [];
     user: User | null = null;
-    error = null;
+    error: any;
 
     
 

@@ -23,8 +23,9 @@ const SignUpPage: React.FC = observer(() => {
             setError('Internal server error. Please try again later.');
           }
         }
+        loginStore.setUser(loginStore.user)
         loginStore.setToken(loginStore.token)
-        navigate('/users');
+        navigate('/');
     } catch (error) {
       if (error.response.status === 409) {
           setErrorMessage(error.response.data.message)
