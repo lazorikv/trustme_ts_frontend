@@ -30,7 +30,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
-    <div id='container'>
+    <div className='container'>
     {location.pathname !== '/login' && location.pathname !== '/signup' && <SubHeader />}
       {location.pathname !== '/login' && location.pathname !== '/signup' && <Header />}
       <Routes>
@@ -45,8 +45,9 @@ const AppContent: React.FC = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/profile" element={<SideComponent />} />
       </Routes>
+      {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </div>
-    {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
+    
     </>
   );
 };

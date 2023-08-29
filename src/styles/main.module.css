@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 40%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   
@@ -23,7 +23,7 @@
 
 .section {
   min-height: 60px;
-  flex: 1; /* равномерное распределение по ширине */
+  flex: 1;
   border: 1px solid rgb(82, 80, 80);
   background-color: #fff;
   text-align: center;

@@ -4,7 +4,7 @@ import styles from "../../styles/aboutUs.module.css";
 const AboutUs: React.FC = () => {
   return (
     <div>
-      <div className="title">Our Story</div>
+      <h2 className="title">Our Story</h2>
       <div className="line"></div>
       <div className={styles.aboutus}>
         <img

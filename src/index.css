@@ -16,13 +16,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100vh; 
   margin: 0;
   padding: 0;
+  clear: both;
+  
 }
 
 body > * {
   width: 80%;
+}
+
+.container {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 150px;
 }
 
 code {
@@ -30,14 +38,6 @@ code {
     monospace;
 }
 
-.container {
-  max-width: 400px;
-  margin: auto 0;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .auth_container, .contactusform {
   max-width: 400px;
